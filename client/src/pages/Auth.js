@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import "./Auth.css"
 
-import {Link, useParams} from "react-router-dom"
+import {Link, useParams, useHistory} from "react-router-dom"
 import TextField from "@material-ui/core/TextField";
 import {Button} from "@material-ui/core";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -17,6 +17,7 @@ const Auth = () => {
         name: '', email: '', password: ''
     })
 
+
     const [open, setOpen] = useState(false);
 
     const [response, setResponse] = useState('')
@@ -26,6 +27,7 @@ const Auth = () => {
     }
 
     let {method} = useParams()
+    let history = useHistory()
     const dispatch = useDispatch()
 
     const handleClose = (event, reason) => {
@@ -40,22 +42,24 @@ const Auth = () => {
         e.preventDefault()
         setOpen(true);
         if (method === "register") {
-            axios.post("http://localhost:5000/api/auth/register", {
+            axios.post("/api/auth/register", {
                 ...form
             })
                 .then((response) => {
                     setResponse(response.data.message)
                     dispatch(logInUser(response.data))
+                    history.push("/home")
                 }, (error) => {
                     setResponse(error.response.data.message)
                 })
         } else {
-            axios.post("http://localhost:5000/api/auth/login", {
+            axios.post("/api/auth/login", {
                 ...form
             })
                 .then((response) => {
                     setResponse(response.data.message)
                     dispatch(logInUser(response.data))
+                    history.push("/home")
                 }, (error) => {
                     setResponse(error.response.data.message)
                 })
