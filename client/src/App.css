@@ -1,0 +1,20 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+.MuiButton-contained {
+    border: 2px solid transparent !important;
+    background-color: white !important;
+}
+
+.MuiButton-contained:hover {
+    background-color: #161616 !important;
+    color: #e0e0e0 !important;
+    border: 2px solid rgba(0, 0, 0, 0.87) !important;
+}

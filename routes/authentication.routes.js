@@ -7,13 +7,12 @@ const User = require('../models/User')
 const router = Router()
 
 
-// api/authentication
+// api/auth/register
 router.post(
     '/register',
     [
-        check('name', 'Incorrect email').isLength({min: 3, max: 20}),
-        check('email', 'Incorrect email').isEmail(),
-        check('password', "Wrong password").isLength({min: 6})
+        check('name', 'Incorrect name').isLength({min: 3, max: 20}),
+        check('email', 'Incorrect email').isEmail()
     ],
     async (req, res) => {
         try {
@@ -40,15 +39,29 @@ router.post(
 
             await user.save()
 
-            res.status(201).json({message: "User created"})
+            const token = jwt.sign(
+                {userId: user.id},
+                config.get('jwtSecret'),
+                {expiresIn: '1h'}
+            )
+
+            res.status(200).json({
+                name: user.name,
+                email: user.email,
+                password,
+                isAuthenticated: true,
+                token,
+                userId: user.id,
+                message: "User created and logged in"
+            })
+
 
         } catch (e) {
             res.status(500).json({message: 'An error occurred'})
         }
     })
 
-
-// api/authentication
+// api/auth/login
 router.post(
     '/login',
     [
@@ -67,9 +80,9 @@ router.post(
                 })
             }
 
-            const {name, email, password} = req.body
+            const {email, password} = req.body
 
-            const user = await User.findOne({name, email})
+            const user = await User.findOne({email})
 
             if (!user) {
                 return res.status(400).json({message: "No user found"})
@@ -90,6 +103,7 @@ router.post(
             res.status(200).json({
                 name: user.name,
                 email: user.email,
+                password,
                 isAuthenticated: true,
                 token,
                 userId: user.id,
@@ -103,7 +117,7 @@ router.post(
     }
 )
 
-// api/authentication
+// api/auth/update
 router.put(
     '/update',
     async (req, res) => {
@@ -125,6 +139,19 @@ router.put(
             console.log(e)
         }
 
+    }
+)
+
+router.get(
+    '/getUsers',
+    async (req, res) => {
+        try {
+            const users = await User.find()
+            res.status(200).json(users)
+        } catch (e) {
+            console.log(e)
+            res.status(500).json({message: "An error occured"})
+        }
     }
 )
 

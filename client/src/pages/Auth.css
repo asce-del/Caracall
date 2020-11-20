@@ -1,0 +1,31 @@
+.auth--container {
+    height: 100vh;
+    background-color: #161616;
+}
+
+.text-field {
+    margin: 20px 0 !important;
+}
+
+.auth--back {
+    font-size: 22px;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 25px;
+}
+
+.auth--form--control {
+    padding-top: calc(30vh - 50px);
+}
+
+.auth--form {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin: 0 auto;
+    background-color: white;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 50px;
+}

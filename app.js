@@ -26,10 +26,7 @@ app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 
 
 
-app.use('/api/authentication', require('./routes/Authentication.routes'))
-app.use('/api/category', require('./routes/Category.routes'))
-app.use('/api/product', require('./routes/Products.routes'))
-app.use('/api/category_group', require('./routes/CategoryGroup.routes'))
+app.use('/api/auth', require('./routes/authentication.routes'))
 
 
 

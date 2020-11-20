@@ -1,0 +1,24 @@
+.welcome--screen {
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("../images/141516.jpg");
+    background-position: center;
+}
+
+
+.welcome--options {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-top: calc(50vh - 53px);
+}
+
+.welcome--actions {
+    display: flex;
+    justify-content: space-evenly;
+    width: 20%;
+}
+
