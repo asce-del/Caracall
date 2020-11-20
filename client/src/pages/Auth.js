@@ -8,6 +8,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from "axios"
 import {useDispatch} from "react-redux";
 import {logInUser} from "../store/user/actions";
+import Snackbar from "../components/SnackBar"
 
 
 const Auth = () => {
@@ -15,6 +16,8 @@ const Auth = () => {
     const [form, setForm] = useState({
         name: '', email: '', password: ''
     })
+
+    const [open, setOpen] = useState(false);
 
     const [response, setResponse] = useState('')
 
@@ -25,8 +28,17 @@ const Auth = () => {
     let {method} = useParams()
     const dispatch = useDispatch()
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault()
+        setOpen(true);
         if (method === "register") {
             axios.post("http://localhost:5000/api/auth/register", {
                 ...form
@@ -53,6 +65,7 @@ const Auth = () => {
     return (
         <>
             <div className="auth--container">
+                <Snackbar msg={response} open={open} handleClose={handleClose} />
                 <Link to="/">
                     <div className="auth--back"><ArrowBackIcon style={{color: "white"}}/>Back</div>
                 </Link>
