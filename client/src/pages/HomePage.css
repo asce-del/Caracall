@@ -1,0 +1,11 @@
+.home--container {
+    background-color: #161616;
+    height: 100vh;
+}
+
+.home--head {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -7,7 +7,7 @@ const WelcomePage = () => {
     return (
         <div className="welcome--screen">
             <div className="welcome--options">
-                <Typography variant="h2" color="initial" style={{color: "white", textAlign: "center"}}>
+                <Typography variant="h2" color="initial" style={{textAlign: "center"}}>
                     Welcome to Crypter!
                 </Typography>
                 <div className="welcome--actions">

@@ -1,4 +1,13 @@
 .MuiAppBar-colorPrimary {
-    color: #161616;
-    background-color: white;
+    color: white !important;
+    background-color: #161616 !important;
+}
+
+.header {
+    border-bottom: 2px solid white;
+}
+
+.MuiToolbar-root {
+    display: flex !important;
+    justify-content: space-between !important;
 }

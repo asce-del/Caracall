@@ -1,12 +1,21 @@
 * {
     padding: 0;
     margin: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 
 a {
     text-decoration: none;
 }
 
+p {
+    color: white;
+    font-size: 20px;
+}
+
+.MuiTypography-root {
+    color: white !important;
+}
 
 .MuiButton-contained {
     border: 2px solid transparent !important;
