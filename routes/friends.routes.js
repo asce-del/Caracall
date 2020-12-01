@@ -7,12 +7,8 @@ router.get(
     '/:name',
     async (req, res) => {
         try {
-            User.find()
-                .populate("")
-                .exec((err, users) => {
-                    if(err) return res.status(400).send(err)
-                    res.status(200).send(users)
-                })
+            const users = await User.find(req.params)
+            res.status(200).json(users)
         } catch (e) {
             console.log(e)
             res.status(500).json({message: 'An error occurred'})

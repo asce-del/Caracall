@@ -86,13 +86,15 @@ const Auth = ({updateMethod}) => {
 
     return (
         <>
-            {updateMethod && <Header />}
+            {updateMethod && <Header/>}
             <div className="auth--container">
                 <Snackbar msg={response} open={open} handleClose={handleClose}/>
+                {!updateMethod &&
                 <Link to="/">
                     <div className="auth--back"><ArrowBackIcon style={{color: "white"}}/>Back</div>
-                </Link>
-                {updateMethod && <div onClick={handleLogout} className="auth--back" style={{cursor: "pointer"}}>Logout</div>}
+                </Link>}
+                {updateMethod &&
+                <div onClick={handleLogout} className="auth--back" style={{cursor: "pointer"}}>Logout</div>}
                 <div className="auth--form--control">
                     <form className="auth--form" noValidate autoComplete="off">
                         {

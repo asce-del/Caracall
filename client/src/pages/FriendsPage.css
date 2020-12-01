@@ -1,0 +1,27 @@
+.home--top {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.home--bottom {
+    display: flex;
+    padding: 20px;
+}
+
+.friends {
+    display: flex;
+    flex-direction: column;
+    justify-content: center !important;
+}
+
+.friend--auth {
+    width: 100%;
+}
+
+.auth--user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
