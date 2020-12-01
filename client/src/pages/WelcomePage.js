@@ -8,11 +8,11 @@ const WelcomePage = () => {
         <div className="welcome--screen">
             <div className="welcome--options">
                 <Typography variant="h2" color="initial" style={{textAlign: "center"}}>
-                    Welcome to Crypter!
+                    Welcome to Caracall!
                 </Typography>
                 <div className="welcome--actions">
                     <Link to="/auth/login">
-                        <Button variant="contained">
+                        <Button variant="contained" style={{marginRight: 10}}>
                             Login
                         </Button>
                     </Link>

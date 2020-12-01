@@ -1,21 +1,24 @@
 import React, {useState} from "react"
 import "./Auth.css"
 
-import {Link, useParams, useHistory} from "react-router-dom"
+import {Link, useHistory, useParams} from "react-router-dom"
 import TextField from "@material-ui/core/TextField";
 import {Button} from "@material-ui/core";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from "axios"
-import {useDispatch} from "react-redux";
-import {logInUser} from "../store/user/actions";
+import {useDispatch, useSelector} from "react-redux";
+import {logInUser, logOutUser} from "../store/user/actions";
 import Snackbar from "../components/SnackBar"
+import Header from "../components/Header";
 
 
-const Auth = () => {
+const Auth = ({updateMethod}) => {
 
     const [form, setForm] = useState({
         name: '', email: '', password: ''
     })
+
+    const userId = useSelector(state => state.user.currentUser)
 
 
     const [open, setOpen] = useState(false);
@@ -38,6 +41,11 @@ const Auth = () => {
         setOpen(false);
     };
 
+    const handleLogout = () => {
+        dispatch(logOutUser(null))
+        setResponse("User logged out!")
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         setOpen(true);
@@ -49,6 +57,16 @@ const Auth = () => {
                     setResponse(response.data.message)
                     dispatch(logInUser(response.data))
                     history.push("/home")
+                }, (error) => {
+                    setResponse(error.response.data.message)
+                })
+        } else if (updateMethod === true) {
+            axios.put(`/api/auth/update/${userId.userId}`, {
+                ...form
+            })
+                .then((response) => {
+                    setResponse(response.data.message)
+                    dispatch(logInUser(response.data))
                 }, (error) => {
                     setResponse(error.response.data.message)
                 })
@@ -68,15 +86,28 @@ const Auth = () => {
 
     return (
         <>
+            {updateMethod && <Header />}
             <div className="auth--container">
-                <Snackbar msg={response} open={open} handleClose={handleClose} />
+                <Snackbar msg={response} open={open} handleClose={handleClose}/>
                 <Link to="/">
                     <div className="auth--back"><ArrowBackIcon style={{color: "white"}}/>Back</div>
                 </Link>
+                {updateMethod && <div onClick={handleLogout} className="auth--back" style={{cursor: "pointer"}}>Logout</div>}
                 <div className="auth--form--control">
                     <form className="auth--form" noValidate autoComplete="off">
                         {
                             method === "register" && <TextField
+                                className="text-field"
+                                required id="name-required"
+                                label="Name"
+                                name="name"
+                                value={form.name}
+                                onChange={changeForm}
+                            />
+                        }
+
+                        {
+                            updateMethod && <TextField
                                 className="text-field"
                                 required id="name-required"
                                 label="Name"
@@ -105,7 +136,7 @@ const Auth = () => {
                         />
                         <div className="form-actions">
                             <Button onClick={handleSubmit} style={{float: "right"}} variant="contained">
-                                Submit
+                                {updateMethod ? "Update" : "Submit"}
                             </Button>
                         </div>
                     </form>

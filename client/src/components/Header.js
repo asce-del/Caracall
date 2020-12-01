@@ -2,10 +2,10 @@ import React from "react"
 import {AppBar, Toolbar, Typography} from "@material-ui/core";
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import {Link} from "react-router-dom"
 
 import "./Header.css"
 
@@ -13,12 +13,11 @@ import "./Header.css"
 const Header = () => {
 
 
-
     return (
         <AppBar className="header">
             <Toolbar>
                 <div className="header-logo">
-                    <Typography variant="h6">Crypter</Typography>
+                    <Link to="/home"><Typography variant="h4">Caracall</Typography></Link>
                 </div>
                 <div className="header-icons">
                     <IconButton aria-label="show 17 new notifications" color="inherit">
@@ -31,14 +30,17 @@ const Header = () => {
                             <MailIcon/>
                         </Badge>
                     </IconButton>
-                    <IconButton
-                        edge="end"
-                        aria-label="account of current user"
-                        aria-haspopup="true"
-                        color="inherit"
-                    >
-                        <AccountCircle/>
-                    </IconButton>
+                    <Link to="/account">
+                        <IconButton
+                            style={{color: "white"}}
+                            edge="end"
+                            aria-label="account of current user"
+                            aria-haspopup="true"
+                            color="inherit"
+                        >
+                            <AccountCircle/>
+                        </IconButton>
+                    </Link>
                 </div>
             </Toolbar>
         </AppBar>

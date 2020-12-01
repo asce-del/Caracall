@@ -118,29 +118,37 @@ router.post(
 )
 
 // api/auth/update
-router.put(
-    '/update',
-    async (req, res) => {
-        try {
-            const updatedUser = await User.updateOne({_id: req.body.id},
+router.put('/update/:id', (req, res, next) => {
+
+
+    const {name, email, password} = req.body
+    const user = new User({
+        _id: req.params.id,
+        name: name,
+        email: email,
+        password: bcrypt.hash(password, 12),
+    });
+
+
+    User.updateOne({_id: req.params.id}, user).then(
+        () => {
+            res.status(201).json(
                 {
-                    $set: {
-                        name: req.body.name,
-                        email: req.body.email,
-                        password: await bcrypt.hash(req.body.password, 12)
-                    }
-                })
-
-            res.status(200).json({updatedUser, message: 'User updated'})
-
-
-        } catch (e) {
-            res.status(500).json({message: 'An error occurred'})
-            console.log(e)
+                    name: user.name,
+                    email: user.email,
+                    isAuthenticated: true,
+                    userId: user.id,
+                    message: "User updated!"
+                });
         }
-
-    }
-)
+    ).catch(
+        (error) => {
+            res.status(400).json({
+                error: error
+            });
+        }
+    );
+});
 
 router.get(
     '/getUsers',

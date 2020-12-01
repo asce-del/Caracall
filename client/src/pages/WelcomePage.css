@@ -19,6 +19,6 @@
 .welcome--actions {
     display: flex;
     justify-content: space-evenly;
-    width: 20%;
+    padding-top: 30px;
 }
 
