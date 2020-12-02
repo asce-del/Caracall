@@ -27,8 +27,8 @@
 .home--image {
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("../images/Free_Person_Icons_Vector.jpg");
+    background-image: url("../images/people.png");
     background-position: center;
-    width: 852px;
-    height: 480px;
+    width: 1136px;
+    height: 587px;
 }
