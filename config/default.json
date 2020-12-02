@@ -1,6 +1,0 @@
-{
-    "port": 5000,
-    "jwtSecret": "vladordalv",
-    "mongoUri": "mongodb+srv://admin:yaromiyfr1@cluster0.akvim.mongodb.net/eshop?retryWrites=true&w=majority",
-    "baseUrl": "http://localhost:3000"
-}

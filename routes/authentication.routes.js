@@ -150,9 +150,13 @@ router.put('/update/:id', (req, res, next) => {
     );
 });
 
+
+// /api/auth/getUsers
 router.get(
     '/getUsers',
     async (req, res) => {
+        const {userId} = req.session
+        console.log(userId)
         try {
             const users = await User.find()
             res.status(200).json(users)
@@ -162,6 +166,16 @@ router.get(
         }
     }
 )
+
+// /api/auth/logout
+// router.post(
+//     '/logout',
+//     async (req, res) => {
+//         try {
+        
+//         }
+//     }
+// )
 
 
 module.exports = router
