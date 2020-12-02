@@ -18,6 +18,7 @@ const Header = () => {
             <Toolbar>
                 <div className="header-logo">
                     <Link to="/home"><Typography variant="h4">Caracall</Typography></Link>
+                    <Link to='/friends'><Typography className="friendLogo" variant="h6">Friends</Typography></Link>
                 </div>
                 <div className="header-icons">
                     <IconButton aria-label="show 17 new notifications" color="inherit">

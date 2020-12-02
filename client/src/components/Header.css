@@ -7,6 +7,16 @@
     border-bottom: 2px solid white;
 }
 
+.header-logo {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.friendLogo {
+    padding: 0 20px;
+}
+
 .MuiToolbar-root {
     display: flex !important;
     justify-content: space-between !important;

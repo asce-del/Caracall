@@ -14,11 +14,12 @@ import Header from "../components/Header";
 
 const Auth = ({updateMethod}) => {
 
+    const user = useSelector(state => state.user.currentUser)
+
     const [form, setForm] = useState({
-        name: '', email: '', password: ''
+        name: updateMethod ? user.name : ' ', email: updateMethod ? user.email : ' ', password: updateMethod ? user.password : ' '
     })
 
-    const userId = useSelector(state => state.user.currentUser)
 
 
     const [open, setOpen] = useState(false);
@@ -61,7 +62,7 @@ const Auth = ({updateMethod}) => {
                     setResponse(error.response.data.message)
                 })
         } else if (updateMethod === true) {
-            axios.put(`/api/auth/update/${userId.userId}`, {
+            axios.put(`/api/auth/update/${user.userId}`, {
                 ...form
             })
                 .then((response) => {
