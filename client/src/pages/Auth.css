@@ -14,6 +14,7 @@
     align-items: center;
     padding: 25px;
     width: 10%;
+    padding-top: 80px;
 }
 
 .auth--form--control {

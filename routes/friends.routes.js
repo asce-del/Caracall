@@ -6,6 +6,7 @@ const auth = require("../middleware/auth.middleware");
 // api/friends/
 router.get("/", async (req, res) => {
   try {
+
     User.find({
       $text: { $search: req.query.q },
     })

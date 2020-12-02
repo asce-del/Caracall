@@ -39,18 +39,11 @@ router.post(
 
             await user.save()
 
-            const token = jwt.sign(
-                {userId: user.id},
-                config.get('jwtSecret'),
-                {expiresIn: '1h'}
-            )
+            req.session.userId = user.id
 
             res.status(200).json({
                 name: user.name,
-                email: user.email,
-                password,
                 isAuthenticated: true,
-                token,
                 userId: user.id,
                 message: "User created and logged in"
             })
@@ -70,7 +63,6 @@ router.post(
     ],
     async (req, res) => {
         try {
-            console.log('Body on login', req.body)
             const errors = validationResult(req)
 
             if (!errors.isEmpty()) {
@@ -94,18 +86,13 @@ router.post(
                 return res.status(400).json({message: "Wrong password, try again"})
             }
 
-            const token = jwt.sign(
-                {userId: user.id},
-                config.get('jwtSecret'),
-                {expiresIn: '1h'}
-            )
+            if (isMatch) {
+                req.session.userId = user.id
+            }
 
             res.status(200).json({
                 name: user.name,
-                email: user.email,
-                password,
                 isAuthenticated: true,
-                token,
                 userId: user.id,
                 message: "User logged in"
             })
@@ -151,21 +138,6 @@ router.put('/update/:id', (req, res, next) => {
 });
 
 
-// /api/auth/getUsers
-router.get(
-    '/getUsers',
-    async (req, res) => {
-        const {userId} = req.session
-        console.log(userId)
-        try {
-            const users = await User.find()
-            res.status(200).json(users)
-        } catch (e) {
-            console.log(e)
-            res.status(500).json({message: "An error occured"})
-        }
-    }
-)
 
 // /api/auth/logout
 // router.post(
