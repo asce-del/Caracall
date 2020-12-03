@@ -16,6 +16,14 @@ router.post(
     ],
     async (req, res) => {
         try {
+            const errors = validationResult(req)
+
+            if (!errors.isEmpty()) {
+                return res.status(400).json({
+                    errors: errors.array(),
+                    message: "Incorrect fields"
+                })
+            }
 
             const {name, email, password} = req.body
 
@@ -54,6 +62,15 @@ router.post(
     ],
     async (req, res) => {
         try {
+            const errors = validationResult(req)
+
+            if (!errors.isEmpty()) {
+                return res.status(400).json({
+                    errors: errors.array(),
+                    message: "Incorrect fields"
+                })
+            }
+
             const {email, password} = req.body
 
             const user = await User.findOne({email})

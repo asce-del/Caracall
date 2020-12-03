@@ -21,7 +21,7 @@ const FriendsPage = () => {
 
   const handleSearch = useCallback(() => {
     if (friend !== "") {
-      axios.get(`/api/friends/?q=${friend}`).then((res) => {
+      axios.get(`/api/friends/?q=${friend}&id=${user.userId}`).then((res) => {
         setDataUsers(res.data);
       });
     }

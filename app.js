@@ -17,6 +17,7 @@ const TWO_HOURS = 1000 * 60 * 60 * 2
 app.use(
   session({
     name: process.env.SESS_NAME,
+    userId: null,
     resave: false,
     saveUninitialized: false,
     secret: process.env.SESS_SECRET,
@@ -43,6 +44,7 @@ app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 
 app.use("/api/auth", require("./routes/authentication.routes"));
 app.use("/api/friends", require("./routes/friends.routes"));
+app.use("/api/session", require("./routes/session.routes"))
 
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client

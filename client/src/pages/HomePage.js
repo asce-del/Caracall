@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import axios from "axios";
 import "./HomePage.css"
 import {Typography} from "@material-ui/core";
 import CallMadeIcon from '@material-ui/icons/CallMade';
@@ -6,6 +7,11 @@ import Header from "../components/Header";
 import {Link} from "react-router-dom"
 
 const HomePage = () => {
+
+    useEffect(() => {
+        axios.get('/api/session/').then(res => console.log(res.data))
+    }, [])
+
     return (
         <>
             <Header />

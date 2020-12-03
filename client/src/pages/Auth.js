@@ -15,9 +15,9 @@ const Auth = ({ updateMethod }) => {
   const user = useSelector((state) => state.user.currentUser);
 
   const [form, setForm] = useState({
-    name: updateMethod ? user.name : " ",
-    email: updateMethod ? user.email : " ",
-    password: updateMethod ? user.password : " ",
+    name: updateMethod ? user.name : "",
+    email: updateMethod ? user.email : "",
+    password: updateMethod ? user.password : "",
   });
 
   const [open, setOpen] = useState(false);
