@@ -52,20 +52,16 @@ const FriendsPage = () => {
   const handleDeleteFriend = useCallback(
     (friend) => {
       dispatch(deleteFriend(friend));
+      setIsFriend(false);
     },
-
     [dispatch]
   );
-
-  console.log(dataUsers);
 
   useEffect(() => {
     dataUsers.map((friend) => {
       checkIfFriend(friend);
     });
   }, [checkIfFriend, dataUsers]);
-
-  console.log(isFriend);
 
   return (
     <>
