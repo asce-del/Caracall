@@ -5,15 +5,16 @@ const auth = require("../middleware/auth.middleware");
 
 // api/friends/
 router.get("/", async (req, res) => {
-
   try {
     User.find({
-      $text: { $search: req.query.q },
-    })
-      .then((users) => {
-        res.status(200).json(users);
-      })
-      .catch((e) => console.log(e));
+      $and: [
+        { $text: { $search: req.query.q } },
+        { _id: { $ne: req.query.id } },
+      ],
+    }).exec((err, users) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).send(users);
+    });
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: "An error occurred" });
