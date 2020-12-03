@@ -6,12 +6,15 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import AddIcon from "@material-ui/icons/Add";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import { addFriend } from "../store/friend/actions";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import AdjustIcon from "@material-ui/icons/Adjust";
+import { addFriend, deleteFriend } from "../store/friend/actions";
 
 const FriendsPage = () => {
   const dispatch = useDispatch();
   const [friend, setFriend] = useState("");
   const [dataUsers, setDataUsers] = useState([]);
+  const [isFriend, setIsFriend] = useState(false);
   const user = useSelector((state) => state.user.currentUser);
   const friends = useSelector((state) => state.friends.friends);
 
@@ -25,17 +28,44 @@ const FriendsPage = () => {
         setDataUsers(res.data);
       });
     }
-  }, [friend]);
+  }, [friend, user.userId]);
 
   useEffect(() => {
     handleSearch();
   }, [handleSearch]);
 
+  const checkIfFriend = useCallback(
+    (user) => {
+      friends.map((friend) => {
+        if (friend._id === user._id) {
+          setIsFriend(true);
+        }
+      });
+    },
+    [friends]
+  );
+
   const handleAddFriend = (friend) => {
     dispatch(addFriend(friend));
   };
 
+  const handleDeleteFriend = useCallback(
+    (friend) => {
+      dispatch(deleteFriend(friend));
+    },
+
+    [dispatch]
+  );
+
   console.log(dataUsers);
+
+  useEffect(() => {
+    dataUsers.map((friend) => {
+      checkIfFriend(friend);
+    });
+  }, [checkIfFriend, dataUsers]);
+
+  console.log(isFriend);
 
   return (
     <>
@@ -62,6 +92,10 @@ const FriendsPage = () => {
                 return (
                   <div className="auth--user" key={friend._id}>
                     <span style={{ fontSize: 19 }}>{friend.name}</span>
+                    <HighlightOffIcon
+                      onClick={() => handleDeleteFriend(friend)}
+                      style={{ cursor: "pointer" }}
+                    />
                     <ChatBubbleIcon style={{ cursor: "pointer" }} />
                   </div>
                 );
@@ -82,10 +116,13 @@ const FriendsPage = () => {
                   return (
                     <div className="auth--user" key={user._id}>
                       <span style={{ fontSize: 19 }}>{user.name}</span>
-                      <AddIcon
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleAddFriend(user)}
-                      />
+                      {isFriend === true && <AdjustIcon />}
+                      {isFriend === false && (
+                        <AddIcon
+                          style={{ cursor: "pointer" }}
+                          onClick={() => handleAddFriend(user)}
+                        />
+                      )}
                     </div>
                   );
                 })
