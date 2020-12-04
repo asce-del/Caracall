@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 function App() {
   const isAuth = useSelector((state) => state.user.currentUser);
 
+
+  // something
   if (isAuth) {
     return (
       <Switch>
