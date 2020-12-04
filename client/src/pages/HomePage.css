@@ -29,6 +29,23 @@
     background-repeat: no-repeat;
     background-image: url("../images/people.png");
     background-position: center;
-    width: 1136px;
+    width: 900px;
     height: 587px;
+}
+
+.desc-text {
+    font-weight: 400;
+    font-size: 18px;
+
+    color: white;
+    opacity: 0.8;
+}
+
+.company-name {
+    padding-bottom: 25px;
+    font-size: 64px;
+}
+
+.button-find {
+    margin-top: 35px;
 }

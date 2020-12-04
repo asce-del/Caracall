@@ -7,6 +7,8 @@ import {PersistGate} from "redux-persist/integration/react";
 import {persistor, store} from "./store/store";
 import {BrowserRouter as Router} from 'react-router-dom'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 ReactDOM.render(
     <Provider store={store}>
         <React.StrictMode>
