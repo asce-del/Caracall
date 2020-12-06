@@ -10,6 +10,8 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import AdjustIcon from "@material-ui/icons/Adjust";
 import { addFriend, deleteFriend } from "../store/friend/actions";
 
+import SearchFriend from '../components/SearchFriend';
+
 const FriendsPage = () => {
   const dispatch = useDispatch();
   const [friend, setFriend] = useState("");
@@ -64,6 +66,40 @@ const FriendsPage = () => {
   }, [checkIfFriend, dataUsers]);
 
   return (
+    <div>
+      <Header/>
+      <div className='main-container'>
+        <div className='main-container__content'>
+          <div className='my-friends-container'>
+            <form noValidate autoComplete="off">
+              <TextField
+                id="standard-basic"
+                onChange={changeForm}
+                value={friend}
+                name="friend"
+                label="Find friends..."
+              />
+            </form>
+            {
+              dataUsers.length !== 0 &&
+              dataUsers.map(searchFriend => {
+                return (
+                  <div key={searchFriend._id}>
+                    <SearchFriend friend={searchFriend} isFriend={isFriend} />
+                  </div>
+                )
+              })
+            }
+          </div>
+          <div className='search-friends-container'>
+            My friends
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  /*return (
     <>
       <Header />
       <div className="home--container friends">
@@ -130,7 +166,7 @@ const FriendsPage = () => {
         </div>
       </div>
     </>
-  );
+  );*/
 };
 
 export default FriendsPage;

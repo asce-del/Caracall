@@ -1,0 +1,11 @@
+.main-container {
+    background-color: yellow;
+}
+
+.main-container__name {
+    font-size: 14px;
+}
+
+.main-container__button {
+    cursor: pointer;
+}

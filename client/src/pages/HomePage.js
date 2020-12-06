@@ -6,20 +6,26 @@ import CallMadeIcon from '@material-ui/icons/CallMade';
 import Header from "../components/Header";
 import {Link} from "react-router-dom"
 
+import Button from 'react-bootstrap/Button'
+
 const HomePage = () => {
 
     useEffect(() => {
         axios.get('/api/session/').then(res => console.log(res.data))
     }, [])
 
+    //<Link to="/friends"><p className="home--friend">Find new friends <CallMadeIcon style={{fontSize: 32}} /></p></Link>
+
     return (
         <>
             <Header />
             <div className="home--container">
                 <div className="home--text">
-                    <p>From person to person!</p>
-                    <p style={{padding: 10}}>Start sharing your ideas with friends right now!</p>
-                    <Link to="/friends"><p className="home--friend">Find new friends <CallMadeIcon style={{fontSize: 32}} /></p></Link>
+                    <p className='company-name'>Caracall</p>
+                    <span className='desc-text' >From person to person!</span>
+                    <span className='desc-text' >Start sharing your ideas with friends right now!</span>
+                    
+                    <Button href="/friends" variant="dark" className='button-find'>Find new friends</Button>
                 </div>
                 <div className="home--image">
                 </div>
