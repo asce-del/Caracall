@@ -48,10 +48,10 @@
 
 .my-friends-container {
     padding: 5px;
-    padding-right: 15px;
+    flex: 1;
 }
 
 .search-friends-container {
     padding: 5px;
-    flex: 1;
+    padding-right: 15px;
 }
