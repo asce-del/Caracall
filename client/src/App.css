@@ -1,30 +1,31 @@
 * {
-    padding: 0;
-    margin: 0;
-    font-family: 'Montserrat', sans-serif;
+  padding: 0;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none !important;
+  color: white !important;
 }
 
 p {
-    color: white;
-    font-weight: bold;
-    font-size: 24px;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
 }
 
 .MuiTypography-root {
-    color: white !important;
+  color: white !important;
 }
 
 .MuiButton-contained {
-    border: 2px solid transparent !important;
-    background-color: white !important;
+  border: 2px solid transparent !important;
+  background-color: white !important;
 }
 
 .MuiButton-contained:hover {
-    background-color: #161616 !important;
-    color: #e0e0e0 !important;
-    border: 2px solid rgba(0, 0, 0, 0.87) !important;
+  background-color: #161616 !important;
+  color: #e0e0e0 !important;
+  border: 2px solid rgba(0, 0, 0, 0.87) !important;
 }

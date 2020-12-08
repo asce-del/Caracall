@@ -6,6 +6,7 @@ import Auth from "./pages/Auth";
 import { Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage";
+import MessangerIndex from "./pages/Messanger/MessangerIndex"
 import { useSelector } from "react-redux";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/home" exact component={HomePage} />
         <Route path="/account" exact component={AccountPage} />
         <Route path="/friends" exact component={FriendsPage} />
+        <Route path="/messanger" exact component={MessangerIndex} />
         <Redirect to="/home" />
       </Switch>
     );
