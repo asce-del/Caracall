@@ -11,6 +11,7 @@ import AdjustIcon from "@material-ui/icons/Adjust";
 import { addFriend, deleteFriend } from "../store/friend/actions";
 
 import SearchFriend from '../components/SearchFriend';
+import Friend from '../components/Friend'
 
 const FriendsPage = () => {
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ const FriendsPage = () => {
   );
 
   const handleAddFriend = (friend) => {
+    console.log(friend)
     dispatch(addFriend(friend));
   };
 
@@ -70,7 +72,7 @@ const FriendsPage = () => {
       <Header/>
       <div className='main-container'>
         <div className='main-container__content'>
-          <div className='my-friends-container'>
+          <div className='search-friends-container'>
             <form noValidate autoComplete="off">
               <TextField
                 id="standard-basic"
@@ -85,14 +87,27 @@ const FriendsPage = () => {
               dataUsers.map(searchFriend => {
                 return (
                   <div key={searchFriend._id}>
-                    <SearchFriend friend={searchFriend} isFriend={isFriend} />
+                    <SearchFriend friend={searchFriend} isFriend={isFriend} onAdd={handleAddFriend}/>
                   </div>
                 )
               })
             }
           </div>
-          <div className='search-friends-container'>
+          <div className='my-friends-container'>
             My friends
+
+            <div>
+              {
+                friends.length !== 0 &&
+                friends.map(friend => {
+                  return (
+                    <div key={friend._id} >
+                      <Friend friend={friend} />
+                    </div>
+                  )
+                })
+              }
+            </div>
           </div>
         </div>
       </div>
