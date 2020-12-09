@@ -18,20 +18,20 @@ const Header = () => {
             <Typography variant="h4">Caracall®</Typography>
           </Link>
           <Link to="/friends">
-            <Typography className="friendLogo" variant="h9">
+            <Typography className="friendLogo" variant="h6">
               Friends
             </Typography>
           </Link>
         </div>
         <div className="header-icons">
           <IconButton aria-label="show 17 new notifications" color="inherit">
-            <Badge badgeContent={17} color="white">
+            <Badge badgeContent={17} color="primary">
               <NotificationsIcon />
             </Badge>
           </IconButton>
           <Link to="/messanger">
             <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="white">
+              <Badge badgeContent={4} color="primary">
                 <MailIcon />
               </Badge>
             </IconButton>

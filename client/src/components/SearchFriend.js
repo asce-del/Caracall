@@ -6,9 +6,6 @@ import AddIcon from "@material-ui/icons/Add"
 import './SearchFriend.css'
 
 const SearchFriend = ({friend, isFriend, onAdd}) => {
-    console.log(friend)
-    console.log(isFriend)
-
     return (
         <div className='search-friend-container'>
            <div className='search-friend__name' >

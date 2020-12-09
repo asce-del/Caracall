@@ -2,14 +2,18 @@ import React from "react";
 import Profile from "./Profile";
 import Chat from "./Chat";
 import FriendsDialog from "./FriendsDialog";
-import "./MessangerStyles.css"
+import Header from "../../components/Header";
+import "./MessangerStyles.css";
 
 const MessangerIndex = () => {
   return (
     <>
-      <Profile />
-      <FriendsDialog />
-      <Chat />
+      <Header />
+      <div className="messanger">
+        <Profile />
+        <FriendsDialog />
+        <Chat />
+      </div>
     </>
   );
 };

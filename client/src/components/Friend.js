@@ -5,8 +5,7 @@ import './Friend.css'
 import RemoveIcon from '@material-ui/icons/Remove'
 import ChatIcon from '@material-ui/icons/Chat'
 
-const Friend = ({friend}) => {
-    console.log(friend)
+const Friend = ({friend, handleDeleteFriend}) => {
 
     return (
         <div className='friend-container'>
@@ -18,7 +17,7 @@ const Friend = ({friend}) => {
                 <div className='friend-button-container'>
                     <ChatIcon style={{fontSize: 16, color: 'green'}} />
                 </div>
-                <div className='friend-button-container'>
+                <div className='friend-button-container' onClick={() => handleDeleteFriend(friend)}>
                     <RemoveIcon style={{fontSize: 16, color: 'red'}} />
                 </div>
             </div>

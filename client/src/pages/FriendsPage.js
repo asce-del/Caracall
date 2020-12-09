@@ -4,14 +4,10 @@ import { TextField } from "@material-ui/core";
 import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import AddIcon from "@material-ui/icons/Add";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import AdjustIcon from "@material-ui/icons/Adjust";
 import { addFriend, deleteFriend } from "../store/friend/actions";
 
-import SearchFriend from '../components/SearchFriend';
-import Friend from '../components/Friend'
+import SearchFriend from "../components/SearchFriend";
+import Friend from "../components/Friend";
 
 const FriendsPage = () => {
   const dispatch = useDispatch();
@@ -38,9 +34,11 @@ const FriendsPage = () => {
   }, [handleSearch]);
 
   const checkIfFriend = useCallback(
-    (user) => {
+    (userFriend) => {
       friends.map((friend) => {
-        if (friend._id === user._id) {
+        console.log(friend)
+        console.log(userFriend)
+        if (friend._id === userFriend._id) {
           setIsFriend(true);
         }
       });
@@ -50,6 +48,8 @@ const FriendsPage = () => {
 
   const handleAddFriend = (friend) => {
     console.log(friend)
+    axios.post("/api/friends/addFriend/", { userFriendId: friend._id, currentUserId: user.userId })
+      .then((res) => console.log(res.data));
     dispatch(addFriend(friend));
   };
 
@@ -69,10 +69,10 @@ const FriendsPage = () => {
 
   return (
     <div>
-      <Header/>
-      <div className='main-container'>
-        <div className='main-container__content'>
-          <div className='search-friends-container'>
+      <Header />
+      <div className="main-container">
+        <div className="main-container__content">
+          <div className="search-friends-container">
             <form noValidate autoComplete="off">
               <TextField
                 id="standard-basic"
@@ -82,37 +82,39 @@ const FriendsPage = () => {
                 label="Find friends..."
               />
             </form>
-            {
-              dataUsers.length !== 0 &&
-              dataUsers.map(searchFriend => {
+            {dataUsers.length !== 0 &&
+              dataUsers.map((searchFriend) => {
                 return (
                   <div key={searchFriend._id}>
-                    <SearchFriend friend={searchFriend} isFriend={isFriend} onAdd={handleAddFriend}/>
+                    <SearchFriend
+                      friend={searchFriend}
+                      isFriend={isFriend}
+                      onAdd={handleAddFriend}
+                    />
                   </div>
-                )
-              })
-            }
+                );
+              })}
           </div>
-          <div className='my-friends-container'>
+          <div className="my-friends-container">
             My friends
-
             <div>
-              {
-                friends.length !== 0 &&
-                friends.map(friend => {
+              {friends.length !== 0 &&
+                friends.map((friend) => {
                   return (
-                    <div key={friend._id} >
-                      <Friend friend={friend} />
+                    <div key={friend._id}>
+                      <Friend
+                        friend={friend}
+                        handleDeleteFriend={handleDeleteFriend}
+                      />
                     </div>
-                  )
-                })
-              }
+                  );
+                })}
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 
   /*return (
     <>
