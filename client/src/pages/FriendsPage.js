@@ -16,7 +16,6 @@ const FriendsPage = () => {
   const [dataUsers, setDataUsers] = useState([]);
   const [isFriend, setIsFriend] = useState(false);
   const user = useSelector((state) => state.user.currentUser);
-  const friends = useSelector((state) => state.friends.friends);
 
   const changeForm = (e) => {
     setFriend(e.target.value);
@@ -36,15 +35,13 @@ const FriendsPage = () => {
 
   const checkIfFriend = useCallback(
     (userFriend) => {
-      friends.map((friend) => {
-        console.log(friend);
-        console.log(userFriend);
+      friendsData.map((friend) => {
         if (friend._id === userFriend._id) {
           setIsFriend(true);
         }
       });
     },
-    [friends]
+    [friendsData]
   );
 
   const handleAddFriend = (friend) => {
@@ -58,11 +55,10 @@ const FriendsPage = () => {
       .then((res) => handleConcat(res.data));
   };
 
-
-const handleConcat = (data) => {
-  dispatch(addFriend(data.user))
-  setFriendsData(friendsData => friendsData.concat(data.user));
-}
+  const handleConcat = (data) => {
+    dispatch(addFriend(data.user));
+    setFriendsData((friendsData) => friendsData.concat(data.user));
+  };
 
   const handleDeleteFriend = useCallback(
     (friend) => {

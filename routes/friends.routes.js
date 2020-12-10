@@ -84,9 +84,13 @@ router.post("/deleteFriend/", async (req, res) => {
   try {
     const { currentUserId, userFriendId } = req.body;
 
+    console.log(req.body)
+
     const checkIfExist = await User.findOne({
       friends: { friend_id: userFriendId },
     });
+
+    console.log(checkIfExist)
 
     const friendToDelete = await User.findById(userFriendId);
 
