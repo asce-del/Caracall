@@ -58,8 +58,9 @@ const FriendsPage = () => {
   const handleDeleteFriend = useCallback(
     (friend) => {
       axios
-        .delete(`/api/friends/deleteFriend/${friend._id}`, {
+        .post("/api/friends/deleteFriend/", {
           currentUserId: user.userId,
+          userFriendId: friend._id,
         })
         .then((res) => dispatch(deleteFriend(res.data.user)));
       setIsFriend(false);

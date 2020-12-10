@@ -31,6 +31,9 @@ router.post("/addFriend/", async (req, res) => {
 
     User.findById(userFriendId, function (err, user) {
       friendToAdd = user;
+      if (err) {
+        console.log(err);
+      }
     });
 
     if (checkIfExist) {
@@ -49,23 +52,25 @@ router.post("/addFriend/", async (req, res) => {
 });
 
 // api/friends/deleteFriend/
-router.delete("/deleteFriend/:id", async (req, res) => {
+router.post("/deleteFriend/", async (req, res) => {
   try {
+    const { currentUserId, userFriendId } = req.body;
 
-    const {currentUserId} = req.body;
-
-    const checkIfExist = await User.findOne({ friends: req.params.id });
+    const checkIfExist = await User.findOne({ friends: userFriendId });
     var friendToDelete = null;
 
-    User.findById(req.params.id , function (err, user) {
+    User.findById(userFriendId, function (err, user) {
       friendToDelete = user;
+      if (err) {
+        console.log(err);
+      }
     });
 
     if (!checkIfExist) {
-      return res.status(400).json({ message: "Dont exist" });
+      return res.status(400).json({ message: "Friend dont exist" });
     }
 
-    User.updateOne({ _id: currentUserId }, { $pull: { friends: req.params.id } })
+    User.updateOne({ _id: currentUserId }, { $pull: { friends: userFriendId } })
       .then(() =>
         res.status(201).json({ message: "User deleted", user: friendToDelete })
       )
@@ -74,6 +79,6 @@ router.delete("/deleteFriend/:id", async (req, res) => {
     console.log(e);
     res.status(500).json({ message: "An error occurred" });
   }
-})
+});
 
 module.exports = router;
