@@ -36,8 +36,8 @@ const FriendsPage = () => {
   const checkIfFriend = useCallback(
     (userFriend) => {
       friends.map((friend) => {
-        console.log(friend)
-        console.log(userFriend)
+        console.log(friend);
+        console.log(userFriend);
         if (friend._id === userFriend._id) {
           setIsFriend(true);
         }
@@ -47,15 +47,21 @@ const FriendsPage = () => {
   );
 
   const handleAddFriend = (friend) => {
-    console.log(friend)
-    axios.post("/api/friends/addFriend/", { userFriendId: friend._id, currentUserId: user.userId })
-      .then((res) => console.log(res.data));
-    dispatch(addFriend(friend));
+    axios
+      .post("/api/friends/addFriend/", {
+        userFriendId: friend._id,
+        currentUserId: user.userId,
+      })
+      .then((res) => dispatch(addFriend(res.data.user)));
   };
 
   const handleDeleteFriend = useCallback(
     (friend) => {
-      dispatch(deleteFriend(friend));
+      axios
+        .delete(`/api/friends/deleteFriend/${friend._id}`, {
+          currentUserId: user.userId,
+        })
+        .then((res) => dispatch(deleteFriend(res.data.user)));
       setIsFriend(false);
     },
     [dispatch]
