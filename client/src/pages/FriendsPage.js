@@ -50,6 +50,8 @@ const FriendsPage = () => {
     axios
       .post("/api/friends/addFriend/", {
         userFriendId: friend._id,
+        userFriendEmail: friend.email,
+        userFriendName: friend.name,
         currentUserId: user.userId,
       })
       .then((res) => dispatch(addFriend(res.data.user)));
@@ -65,8 +67,14 @@ const FriendsPage = () => {
         .then((res) => dispatch(deleteFriend(res.data.user)));
       setIsFriend(false);
     },
-    [dispatch]
+    [dispatch, user.userId]
   );
+
+  useEffect(() => {
+    axios
+      .get(`/api/friends/getUserFriends/${user.userId}`)
+      .then((res) => console.log(res.data.friends));
+  }, [user.userId]);
 
   useEffect(() => {
     dataUsers.map((friend) => {

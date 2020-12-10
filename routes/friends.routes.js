@@ -21,12 +21,35 @@ router.get("/", async (req, res) => {
   }
 });
 
+// api/getUserFriends/:id
+router.get("/getUserFriends/:id", async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+
+    if (user) {
+      res.status(200).json({
+        friends: user.friends,
+      });
+    }
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({ message: "An error occurred" });
+  }
+});
+
 // api/friends/addFriend/
 router.post("/addFriend/", async (req, res) => {
   try {
-    const { currentUserId, userFriendId } = req.body;
+    const {
+      currentUserId,
+      userFriendId,
+      userFriendEmail,
+      userFriendName,
+    } = req.body;
 
-    const checkIfExist = await User.findOne({ friends: userFriendId });
+    const checkIfExist = await User.findOne({
+      friends: { friend_id: userFriendId },
+    });
     var friendToAdd = null;
 
     User.findById(userFriendId, function (err, user) {
@@ -40,7 +63,18 @@ router.post("/addFriend/", async (req, res) => {
       return res.status(400).json({ message: "Friend already added" });
     }
 
-    User.updateOne({ _id: currentUserId }, { $push: { friends: userFriendId } })
+    User.updateOne(
+      { _id: currentUserId },
+      {
+        $push: {
+          friends: {
+            friend_id: userFriendId,
+            friend_email: userFriendEmail,
+            friend_name: userFriendName,
+          },
+        },
+      }
+    )
       .then(() =>
         res.status(201).json({ message: "User added", user: friendToAdd })
       )
@@ -56,7 +90,11 @@ router.post("/deleteFriend/", async (req, res) => {
   try {
     const { currentUserId, userFriendId } = req.body;
 
-    const checkIfExist = await User.findOne({ friends: userFriendId });
+    
+    // const checkIfExist = await User.findOne({
+    //   friends: { friend_id: userFriendId },
+    // });
+
     var friendToDelete = null;
 
     User.findById(userFriendId, function (err, user) {
@@ -66,11 +104,14 @@ router.post("/deleteFriend/", async (req, res) => {
       }
     });
 
-    if (!checkIfExist) {
-      return res.status(400).json({ message: "Friend dont exist" });
-    }
+    // if (!checkIfExist) {
+    //   return res.status(400).json({ message: "Friend dont exist" });
+    // }
 
-    User.updateOne({ _id: currentUserId }, { $pull: { friends: userFriendId } })
+    User.updateOne(
+      { _id: currentUserId },
+      { $pull: { friends: { friend_id: userFriendId } } }
+    )
       .then(() =>
         res.status(201).json({ message: "User deleted", user: friendToDelete })
       )
