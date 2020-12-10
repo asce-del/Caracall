@@ -10,8 +10,8 @@ const Friend = ({friend, handleDeleteFriend}) => {
     return (
         <div className='friend-container'>
             <div className='friend-container__info'>
-                <span className='friend-container__name'>{friend.name}</span>
-                <span className='friend-container__email'>{friend.email}</span>
+                <span className='friend-container__name'>{friend.friend_name}</span>
+                <span className='friend-container__email'>{friend.friend_email}</span>
             </div>
             <div className='friend-container__buttons' >
                 <div className='friend-button-container'>

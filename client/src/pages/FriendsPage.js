@@ -12,6 +12,7 @@ import Friend from "../components/Friend";
 const FriendsPage = () => {
   const dispatch = useDispatch();
   const [friend, setFriend] = useState("");
+  const [friendsData, setFriendsData] = useState([]);
   const [dataUsers, setDataUsers] = useState([]);
   const [isFriend, setIsFriend] = useState(false);
   const user = useSelector((state) => state.user.currentUser);
@@ -54,8 +55,14 @@ const FriendsPage = () => {
         userFriendName: friend.name,
         currentUserId: user.userId,
       })
-      .then((res) => dispatch(addFriend(res.data.user)));
+      .then((res) => handleConcat(res.data));
   };
+
+
+const handleConcat = (data) => {
+  dispatch(addFriend(data.user))
+  setFriendsData(friendsData => friendsData.concat(data.user));
+}
 
   const handleDeleteFriend = useCallback(
     (friend) => {
@@ -73,7 +80,7 @@ const FriendsPage = () => {
   useEffect(() => {
     axios
       .get(`/api/friends/getUserFriends/${user.userId}`)
-      .then((res) => console.log(res.data.friends));
+      .then((res) => setFriendsData(res.data.friends));
   }, [user.userId]);
 
   useEffect(() => {
@@ -113,8 +120,8 @@ const FriendsPage = () => {
           <div className="my-friends-container">
             My friends
             <div>
-              {friends.length !== 0 &&
-                friends.map((friend) => {
+              {friendsData.length !== 0 &&
+                friendsData.map((friend) => {
                   return (
                     <div key={friend._id}>
                       <Friend

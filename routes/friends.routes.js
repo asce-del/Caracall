@@ -50,14 +50,8 @@ router.post("/addFriend/", async (req, res) => {
     const checkIfExist = await User.findOne({
       friends: { friend_id: userFriendId },
     });
-    var friendToAdd = null;
 
-    User.findById(userFriendId, function (err, user) {
-      friendToAdd = user;
-      if (err) {
-        console.log(err);
-      }
-    });
+    const friendToAdd = await User.findById(userFriendId);
 
     if (checkIfExist) {
       return res.status(400).json({ message: "Friend already added" });
@@ -90,32 +84,22 @@ router.post("/deleteFriend/", async (req, res) => {
   try {
     const { currentUserId, userFriendId } = req.body;
 
-    
-    // const checkIfExist = await User.findOne({
-    //   friends: { friend_id: userFriendId },
-    // });
-
-    var friendToDelete = null;
-
-    User.findById(userFriendId, function (err, user) {
-      friendToDelete = user;
-      if (err) {
-        console.log(err);
-      }
+    const checkIfExist = await User.findOne({
+      friends: { friend_id: userFriendId },
     });
 
-    // if (!checkIfExist) {
-    //   return res.status(400).json({ message: "Friend dont exist" });
-    // }
+    const friendToDelete = await User.findById(userFriendId);
+
+    if (!checkIfExist) {
+      return res.status(400).json({ message: "Friend doesnt exist" });
+    }
 
     User.updateOne(
       { _id: currentUserId },
       { $pull: { friends: { friend_id: userFriendId } } }
     )
-      .then(() =>
-        res.status(201).json({ message: "User deleted", user: friendToDelete })
-      )
-      .catch((err) => res.status(201).json({ message: "User isn`t deleted" }));
+      .then(() => res.status(201).json({ user: friendToDelete }))
+      .catch((err) => console.log(err));
   } catch (e) {
     console.log(e);
     res.status(500).json({ message: "An error occurred" });
