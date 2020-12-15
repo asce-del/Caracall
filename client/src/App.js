@@ -10,26 +10,24 @@ import "./App.css";
 import HomePage from "./pages/HomePage";
 import MessangerIndex from "./pages/Messanger/MessangerIndex";
 import { useDispatch, useSelector } from "react-redux";
-import {logInUser} from "./store/user/actions"
+import { logInUser } from "./store/user/actions";
 
 function App() {
   const isAuth = useSelector((state) => state.user.currentUser);
-  const [session, setSession] = useState([]);
-  const [response, setResponse] = useState("")
-  const dispatch = useDispatch()
+  console.log(isAuth);
+  const [response, setResponse] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
-      axios.get("/api/session/").then(
-        (response) => {
-          setSession(response.data);
-          dispatch(logInUser(response.data));
-        },
-        (error) => {
-          setResponse(error.response.data.message);
-        }
-      );
-    }, []);
-
+    axios.get("/api/session/").then(
+      (response) => {
+        dispatch(logInUser(response.data));
+      },
+      (error) => {
+        setResponse(error.response.data.message);
+      }
+    );
+  }, [dispatch]);
 
   if (isAuth) {
     return (
