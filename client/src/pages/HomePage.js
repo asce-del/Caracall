@@ -9,9 +9,6 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
 const HomePage = () => {
-  useEffect(() => {
-    axios.get("/api/session/").then((res) => console.log(res.data));
-  }, []);
 
   //<Link to="/friends"><p className="home--friend">Find new friends <CallMadeIcon style={{fontSize: 32}} /></p></Link>
 

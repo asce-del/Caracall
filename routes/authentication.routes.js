@@ -1,7 +1,5 @@
 const {Router} = require('express')
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const config = require('config')
 const {check, validationResult} = require('express-validator')
 const User = require('../models/User')
 const router = Router()
@@ -27,7 +25,7 @@ router.post(
 
             const {name, email, password} = req.body
 
-            const candidate = await User.findOne({name, email})
+            const candidate = await User.findOne({email})
 
             if (candidate) {
                 return res.status(400).json({message: "User already exist"})
@@ -38,7 +36,8 @@ router.post(
 
             await user.save()
 
-            req.session.userId = user.id
+            req.session.isAuth = true
+            req.session.user = user
 
             res.status(200).json({
                 name: user.name,
@@ -85,9 +84,8 @@ router.post(
                 return res.status(400).json({message: "Wrong password, try again"})
             }
 
-            if (isMatch) {
-                req.session.userId = user.id
-            }
+            req.session.isAuth = true
+            req.session.user = user
 
             res.status(200).json({
                 name: user.name,
@@ -138,15 +136,21 @@ router.put('/update/:id', (req, res, next) => {
 
 
 
-// /api/auth/logout
-// router.post(
-//     '/logout',
-//     async (req, res) => {
-//         try {
-        
-//         }
-//     }
-// )
+// api/auth/logout
+router.post(
+    '/logout',
+    async (req, res) => {
+        try {
+        req.session.destroy((err) => {
+            if (err) {
+                console.log(err);
+            } else res.status(200).json({message: "User logged out"})
+        })
+        } catch (e) {
+            res.status(500).json({message: 'An error occurred'})
+        }
+    }
+)
 
 
 module.exports = router

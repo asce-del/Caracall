@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 import WelcomePage from "./pages/WelcomePage";
 import AccountPage from "./pages/AccountPage";
 import FriendsPage from "./pages/FriendsPage";
@@ -6,11 +8,31 @@ import Auth from "./pages/Auth";
 import { Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage";
-import MessangerIndex from "./pages/Messanger/MessangerIndex"
-import { useSelector } from "react-redux";
+import MessangerIndex from "./pages/Messanger/MessangerIndex";
+import { useDispatch, useSelector } from "react-redux";
+import {logInUser} from "./store/user/actions"
 
 function App() {
   const isAuth = useSelector((state) => state.user.currentUser);
+  const [session, setSession] = useState([]);
+  const [response, setResponse] = useState("")
+  let history = useHistory();
+  const dispatch = useDispatch()
+
+  console.log(session);
+
+  useEffect(() => {
+    axios.get("/api/session/").then(
+      (response) => {
+        setSession(response.data);
+        dispatch(logInUser(response.data));
+        history.push("/home");
+      },
+      (error) => {
+        setResponse(error.response.data.message);
+      }
+    );
+  }, []);
 
   if (isAuth) {
     return (

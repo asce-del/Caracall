@@ -41,8 +41,8 @@ const Auth = ({ updateMethod }) => {
   };
 
   const handleLogout = () => {
+    axios.post("/api/auth/logout").then(response => setResponse(response.data.message))
     dispatch(logOutUser(null));
-    setResponse("User logged out!");
   };
 
   const handleSubmit = (e) => {
