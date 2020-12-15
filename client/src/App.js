@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import WelcomePage from "./pages/WelcomePage";
 import AccountPage from "./pages/AccountPage";
@@ -13,19 +12,15 @@ import { logInUser } from "./store/user/actions";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
-  const [response, setResponse] = useState("");
-  let history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
     axios.get("/api/session/").then(
       (response) => {
-        if (user === null) {
-          dispatch(logInUser(response.data));
-        } else setResponse(response.data.message);
+        dispatch(logInUser(response.data));
       },
       (error) => {
-        setResponse(error.response.data.message);
+        console.log(error.response.data);
       }
     );
   }, [dispatch]);

@@ -1,17 +1,11 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import "./HomePage.css";
-import { Typography } from "@material-ui/core";
-import CallMadeIcon from "@material-ui/icons/CallMade";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 
 const HomePage = () => {
-
-  //<Link to="/friends"><p className="home--friend">Find new friends <CallMadeIcon style={{fontSize: 32}} /></p></Link>
-
   return (
     <>
       <Header />
