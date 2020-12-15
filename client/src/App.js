@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import WelcomePage from "./pages/WelcomePage";
 import AccountPage from "./pages/AccountPage";
-import FriendsPage from "./pages/FriendsPage";
 import Auth from "./pages/Auth";
 import { Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
@@ -36,7 +35,6 @@ function App() {
       <Switch>
         <Route path="/home" exact component={HomePage} />
         <Route path="/account" exact component={AccountPage} />
-        <Route path="/friends" exact component={FriendsPage} />
         <Route path="/messanger" exact component={MessangerIndex} />
         <Redirect to="/home" />
       </Switch>
