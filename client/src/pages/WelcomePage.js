@@ -1,7 +1,10 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import "./WelcomePage.css"
 import {Button, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import {logInUser} from "../store/user/actions"
+import axios from "axios";
 
 const WelcomePage = () => {
     return (

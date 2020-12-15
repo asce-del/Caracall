@@ -16,23 +16,20 @@ function App() {
   const isAuth = useSelector((state) => state.user.currentUser);
   const [session, setSession] = useState([]);
   const [response, setResponse] = useState("")
-  let history = useHistory();
   const dispatch = useDispatch()
 
-  console.log(session);
-
   useEffect(() => {
-    axios.get("/api/session/").then(
-      (response) => {
-        setSession(response.data);
-        dispatch(logInUser(response.data));
-        history.push("/home");
-      },
-      (error) => {
-        setResponse(error.response.data.message);
-      }
-    );
-  }, []);
+      axios.get("/api/session/").then(
+        (response) => {
+          setSession(response.data);
+          dispatch(logInUser(response.data));
+        },
+        (error) => {
+          setResponse(error.response.data.message);
+        }
+      );
+    }, []);
+
 
   if (isAuth) {
     return (
