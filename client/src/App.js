@@ -13,15 +13,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { logInUser } from "./store/user/actions";
 
 function App() {
-  const isAuth = useSelector((state) => state.user.currentUser);
-  console.log(isAuth);
+  const user = useSelector((state) => state.user.currentUser);
   const [response, setResponse] = useState("");
+  let history = useHistory();
   const dispatch = useDispatch();
 
   useEffect(() => {
     axios.get("/api/session/").then(
       (response) => {
-        dispatch(logInUser(response.data));
+        if (user === null) {
+          dispatch(logInUser(response.data));
+        } else setResponse(response.data.message);
       },
       (error) => {
         setResponse(error.response.data.message);
@@ -29,7 +31,7 @@ function App() {
     );
   }, [dispatch]);
 
-  if (isAuth) {
+  if (user) {
     return (
       <Switch>
         <Route path="/home" exact component={HomePage} />
