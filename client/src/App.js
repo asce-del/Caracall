@@ -28,10 +28,10 @@ function App() {
   if (user) {
     return (
       <Switch>
-        <Route path="/home" exact component={HomePage} />
+        <Route path="/" exact component={HomePage} />
         <Route path="/account" exact component={AccountPage} />
         <Route path="/messanger" exact component={MessangerIndex} />
-        <Redirect to="/home" />
+        <Route path="*" exact component={HomePage} />
       </Switch>
     );
   }
@@ -40,7 +40,7 @@ function App() {
     <Switch>
       <Route path="/" exact component={WelcomePage} />
       <Route path="/auth/:method" exact component={Auth} />
-      <Redirect to="/" />
+      <Route path="*" exact component={WelcomePage} />
     </Switch>
   );
 }

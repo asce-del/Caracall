@@ -126,7 +126,7 @@ const Auth = ({ updateMethod }) => {
                 id="name-required"
                 label="Name"
                 name="name"
-                value={form.name}
+                value={form.name || ''}
                 onChange={changeForm}
               />
             )}
@@ -138,7 +138,7 @@ const Auth = ({ updateMethod }) => {
                 id="name-required"
                 label="Name"
                 name="name"
-                value={form.name}
+                value={form.name || ''}
                 onChange={changeForm}
               />
             )}
@@ -148,7 +148,7 @@ const Auth = ({ updateMethod }) => {
               id="email-required"
               label="Email"
               name="email"
-              value={form.email}
+              value={form.email || ''}
               onChange={changeForm}
             />
             <TextField
@@ -158,7 +158,7 @@ const Auth = ({ updateMethod }) => {
               type="password"
               autoComplete="current-password"
               name="password"
-              value={form.password}
+              value={form.password || ''}
               onChange={changeForm}
             />
             <div className="form-actions">
