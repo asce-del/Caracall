@@ -10,9 +10,6 @@ const path = require("path");
 require("dotenv").config();
 const mongoose = require("mongoose");
 
-// const server = require("http").createServer(app);
-// const io = require("socket.io")(server);
-
 const TWO_HOURS = 1000 * 60 * 60 * 2
 
 

@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import WelcomePage from "./pages/WelcomePage";
 import AccountPage from "./pages/AccountPage";
 import Auth from "./pages/Auth";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/HomePage";
-import MessangerIndex from "./pages/Messanger/MessangerIndex";
 import { useDispatch, useSelector } from "react-redux";
 import { logInUser } from "./store/user/actions";
 
@@ -30,7 +29,6 @@ function App() {
       <Switch>
         <Route path="/" exact component={HomePage} />
         <Route path="/account" exact component={AccountPage} />
-        <Route path="/messanger" exact component={MessangerIndex} />
         <Route path="*" exact component={HomePage} />
       </Switch>
     );
