@@ -1,69 +1,74 @@
 const express = require("express");
-const app = express();
-const session = require("express-session");
-const MongoDBSession = require("connect-mongodb-session")(session)
-const port = process.env.PORT || 5000;
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
-const path = require("path");
 require("dotenv").config();
-const mongoose = require("mongoose");
+const { ApolloServer, gql } = require("apollo-server-express");
 
-const TWO_HOURS = 1000 * 60 * 60 * 2
+const typeDefs = gql`
+  type Query {
+    hello: String
+    user: User
+  }
 
+  type User {
+    id: ID!
+    username: String!
+    password: String!
+    age: Int!
+  }
 
-const connect = mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("MongoDB Connected..."))
-  .catch((err) => console.log(err));
+  type Error {
+    field: String!
+    message: String!
+  }
 
-  const store = new MongoDBSession({
-    uri: process.env.MONGO_URI,
-    collection: "mySessions",
-  })
+  type RegisterResponse {
+    errors: [Error]!
+    user: User
+  }
 
-  app.use(
-    session({
-      name: process.env.SESS_NAME,
-      resave: false,
-      saveUninitialized: false,
-      store,
-      secret: process.env.SESS_SECRET,
-      cookie: {
-        maxAge: TWO_HOURS,
-        sameSite: true,
-        secure: process.env.NODE_ENV === "production",
-      },
-    })
-  );
+  input UserInfo {
+    username: String!
+    password: String!
+    age: Int!
+  }
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+  type Mutation {
+    register(userInfo: UserInfo!): RegisterResponse!
+  }
+`;
 
-app.use("/api/auth", require("./routes/authentication.routes"));
-app.use("/api/session", require("./routes/session.routes"))
+const resolvers = {
+  Query: {
+    hello: () => "Hello world!",
+    user: () => ({
+      id: 1,
+      username: "tom",
+      password: "dgfdlgu",
+      age: 23
+    }),
+  },
+  Mutation: {
+    register: (_, { userInfo: {username, password, age } }, context) => {
+      const user = {
+        id: 1,
+        username,
+        password,
+        age
+      };
+      return {
+        errors: [null],
+        user,
+      };
+    },
+  },
+};
 
-//use this to show the image you have in node js server to client (react js)
-//https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
-// app.use('/uploads', express.static('uploads'));
+const server = new ApolloServer({ typeDefs, resolvers });
 
-// Serve static assets if in production
-if (process.env.NODE_ENV === "production") {
-  // Set static folder
-  app.use(express.static("client/build"));
+const app = express();
+server.applyMiddleware({ app });
 
-  // index.html for all page routes
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
+const port = process.env.PORT;
 
-app.listen(port, () => {
-  console.log(`Server Running at ${port}`);
-});
+app.listen(port, () =>
+  console.log(`Now browse to http://localhost:${port}` + server.graphqlPath)
+);
